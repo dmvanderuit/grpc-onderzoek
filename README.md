@@ -94,7 +94,7 @@ De communicatie tussen de FlightService en de AircraftService zijn de services d
 
 Voor het uitvoeren van deze demo, is een gemiddeld programmeer-niveau vereist, om de wat complexere concepten te begrijpen. 
 
-De code is te vinden in de `casus` map van deze [repository](https://github.com/dmvanderuit/grpc-onderzoek).
+De code is te vinden in de `casus` map van deze [repository](https://github.com/dmvanderuit/grpc-onderzoek). Op de branch 'uitwerking' is de uitwerking van de casus te vinden.
 
 **Vereisten:**
 
