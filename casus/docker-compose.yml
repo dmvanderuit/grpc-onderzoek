@@ -1,0 +1,16 @@
+version: "3"
+services:
+  aircraft-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=aircraft_db
+    ports:
+      - 54320:5432
+  flight-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=flight_db
+    ports:
+      - 54330:5432

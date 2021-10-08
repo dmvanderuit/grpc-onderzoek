@@ -1,0 +1,94 @@
+.app {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    width: 60vw;
+    border: 5px solid black;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+    background-color: black;
+    color: white;
+    font: 12px monaco, monospace;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+
+}
+
+.header {
+    display: flex;
+    background-color: #ffcc00;
+    padding: 10px;
+}
+
+.departures-wrapper {
+    background-color: black;
+    width: 75px;
+    height: 75px;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    margin-right: 20px;
+}
+
+img.departures {
+    width: 50%;
+    height: 50%;
+    padding: 20px;
+}
+
+.letter-box {
+    display: inline-block;
+    width: 12px;
+    background-color: #555757;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    text-align: center;
+
+    font-weight: bold;
+}
+
+thead tr th {
+    border-bottom: 1px solid #555757;
+    border-collapse: separate;
+    border-spacing: 5px 5px;
+    font-size: 14px;
+}
+
+
+td {
+    padding-right: 20px;
+}
+
+td:last-of-type {
+    padding-right: 0;
+}
+
+.flight-number, .gate {
+    color: yellow;
+}
+
+.status {
+    text-transform: uppercase;
+    color: lightgreen;
+}
+
+.status.negative {
+    color: red;
+}
+
+.status.warning {
+    color: orange;
+}
