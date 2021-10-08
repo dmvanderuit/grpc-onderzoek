@@ -1,0 +1,18 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+service AircraftService {
+	rpc GetAircraft(google.protobuf.Empty) returns (AircraftResponse);
+}
+
+message Aircraft {
+	int32 Id = 1;
+	string Model = 2;
+	int32 Capacity = 3;
+	string Status = 4;
+	string FlightNumber = 5;
+}
+
+message AircraftResponse {
+	repeated Aircraft AllAircraft = 1;
+}

@@ -1,9 +1,20 @@
+import * as grpc from "@grpc/grpc-js";
+import * as protoLoader from "@grpc/proto-loader";
 import { Client } from "pg";
 import * as fs from "fs";
 import { DatabaseAircraft } from "./models/DatabaseAircraft";
 import { Aircraft } from "./models/Aircraft";
 
+const PROTO_PATH = "./aircraft-service.proto";
 let dbClient = null;
+
+const options: protoLoader.Options = {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  defaults: true,
+  oneofs: true,
+};
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -34,11 +45,6 @@ const connectToDb = async () => {
   }
 };
 
-const seedDb = async () => {
-  const seedScript = fs.readFileSync("seed.sql").toString();
-  await dbClient.query(seedScript);
-};
-
 const getAllAircraft = async () => {
   const { rows } = await dbClient.query("SELECT * FROM aircraft");
 
@@ -53,6 +59,11 @@ const getAllAircraft = async () => {
   return aircraft;
 };
 
+const seedDb = async () => {
+  const seedScript = fs.readFileSync("seed.sql").toString();
+  await dbClient.query(seedScript);
+};
+
 const startApplication = async () => {
   try {
     await connectToDb();
@@ -62,8 +73,31 @@ const startApplication = async () => {
     throw e;
   }
 
+  const packageDefinition = await protoLoader.load(PROTO_PATH, options);
+
+  const aircraftServiceProto = grpc.loadPackageDefinition(packageDefinition);
+
+  const server = new grpc.Server();
+
+  server.addService((aircraftServiceProto.AircraftService as any).service, {
+    GetAircraft: async (_, callback) => {
+      const aircraft = await getAllAircraft();
+
+      callback(null, { AllAircraft: aircraft });
+    },
+  });
+
   const ip = process.env.IP || "127.0.0.1";
   const port = 50051;
+
+  server.bindAsync(
+    `${ip}:${port}`,
+    grpc.ServerCredentials.createInsecure(),
+    (error, port) => {
+      console.log(`Server running at http://${ip}:${port}`);
+      server.start();
+    }
+  );
 };
 
 startApplication().then(() => {
